@@ -1,0 +1,11 @@
+Public IP Address:193.226.20.191Processor: Windows-11-10.0.22631-SP0
+System: Windows 11
+Machine: AMD64
+Hostname: Razvan
+Private IP Address: 10.191.27.119
+Public IP Address:193.226.20.191
+Processor: Windows-11-10.0.22631-SP0
+System: Windows 11
+Machine: AMD64
+Hostname: Razvan
+Private IP Address: 10.191.27.119
