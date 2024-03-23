@@ -1,5 +1,5 @@
-# Ignore everything
-*
+# Ignore everything in the project directory
+/*
 
 # But not this specific file
 !keylogger.py
